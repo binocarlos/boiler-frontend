@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { routerActions } from 'react-router-redux'
 import { passporttools, UserLoader } from 'passport-service-gui'
 import AppWrapper from 'kettle-ui/lib/AppWrapper'
-import constants from '../constants'
+
+import {
+  user_loaded 
+} from '../actions'
 
 /*
 
@@ -75,9 +77,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     // we move the user to '/login if they are not logged in'
     // after this point the onEnter handlers for the routes take over
     userLoaded:(data = {}) => {
-      data.loggedIn ? 
-        dispatch(routerActions.push(constants.dashboardPath)) :
-        dispatch(routerActions.push(constants.loginPath))
+      dispatch(user_loaded(data))
     }
   }
 }

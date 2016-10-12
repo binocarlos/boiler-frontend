@@ -6,7 +6,7 @@ class Loader extends Component {
   render() {
 
     return (
-       <div>
+      <div>
         <CircularProgress />
       </div>
     )

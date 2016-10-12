@@ -61,6 +61,7 @@ export default (store, settings = {}) => {
       </Route>
       <Route path="login" component={PassportForm} page="login" onEnter={auth.guest} />
       <Route path="register" component={PassportForm} page="register" onEnter={auth.guest} />
+      <Route path="loading" component={settings.loader} />
       {settings.routes.map(createRoute)}
     </Route>
   )

@@ -9,6 +9,7 @@ import thunk from 'redux-thunk'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { passportreducer } from 'passport-service-gui'
+import boilerReducer from './reducer'
 
 import Routes from './routes'
 import { SettingsFactory, SettingsProvider } from './settings'
@@ -30,6 +31,7 @@ const boilerapp = (opts = {}) => {
   const reducer = combineReducers({
     passport: passportreducer,
     routing: routerReducer,
+    boiler: boilerReducer,
     ...settings.reducers
   })
 
