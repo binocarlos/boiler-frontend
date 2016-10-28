@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import UIWelcome from '../components/Welcome'
+import Welcome from '../components/Welcome'
 
-export class Welcome extends Component {
+export class WelcomeContainer extends Component {
   render() {
     return (
-      <UIWelcome {...this.props} />
+      <Welcome {...this.props} />
     )
   }
 }
@@ -21,4 +21,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Welcome)
+)(WelcomeContainer)

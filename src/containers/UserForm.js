@@ -6,10 +6,14 @@ import {
   EMAIL_FIELD
 } from 'passport-service-gui/lib/schema'
 
-import constants from '../constants'
-import UIUserForm from '../components/UserForm'
+import {
+  user_details_message
+} from '../actions'
 
-export class UserForm extends Component {
+import constants from '../constants'
+import UserForm from '../components/UserForm'
+
+export class UserFormContainer extends Component {
   render() {
 
     const settings = this.context.settings
@@ -26,37 +30,31 @@ export class UserForm extends Component {
     }
 
     return (
-      <UIUserForm {...props} />
+      <UserForm {...props} />
     )
   }
 }
 
-UserForm.contextTypes = {
+UserFormContainer.contextTypes = {
   settings: React.PropTypes.object
 }
 
 function mapStateToProps(state, ownProps) {
-  return {}
+  return {
+    message:state.boiler.userDetailsMessage
+  }
 }
 
 function mapDispatchToProps(dispatch, ownProps) {
-
-  const postLogin = (err) => {
-
-    if(err) return
-
-    // clear existing passport state
-    dispatch(actions.resetStatus())
-
-    // redirect to '/dashboard'
-    dispatch(routerActions.push(constants.dashboardPath))
-  }
-
+  
   return {
     onUpdate:(err, body, opts) => {
       if(err) return
 
-      alert('user form updated - put a snackbar in containers/UserForm.js')
+      dispatch(user_details_message('user details saved'))
+    },
+    onCloseMessage:() => {
+      dispatch(user_details_message())
     }
   }
 }
@@ -64,4 +62,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserForm)
+)(UserFormContainer)

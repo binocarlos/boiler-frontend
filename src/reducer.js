@@ -1,13 +1,16 @@
 import update from 'react/lib/update'
 import {
-  BOILER_PATH_LOADED
+  BOILER_PATH_LOADED,
+  BOILER_USER_DETAILS_MESSAGE
 } from './actions'
 
 const DEFAULT_STATE = {
   currentPage: {
     path: null,
     requireUser: false
-  }
+  },
+  // controls the snackbar on the user details page
+  userDetailsMessage:null
 }
 
 export default function boilerreducer(state = DEFAULT_STATE, action = {}) {
@@ -25,6 +28,14 @@ export default function boilerreducer(state = DEFAULT_STATE, action = {}) {
         }
       })
 
+    case BOILER_USER_DETAILS_MESSAGE:
+
+      return update(state, {
+        userDetailsMessage:{
+          $set:action.message
+        }
+      })
+      
     default:
       return state
   }

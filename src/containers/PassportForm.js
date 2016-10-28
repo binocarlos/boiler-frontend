@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { routerActions } from 'react-router-redux'
 import { passporttools, actions } from 'passport-service-gui'
 import constants from '../constants'
-import UIPassportForm from '../components/PassportForm'
+import PassportForm from '../components/PassportForm'
 
-export class PassportForm extends Component {
+export class PassportFormContainer extends Component {
   render() {
 
     const settings = this.context.settings
@@ -16,12 +16,12 @@ export class PassportForm extends Component {
     }
 
     return (
-      <UIPassportForm {...props} />
+      <PassportForm {...props} />
     )
   }
 }
 
-PassportForm.contextTypes = {
+PassportFormContainer.contextTypes = {
   settings: React.PropTypes.object
 }
 
@@ -76,4 +76,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PassportForm)
+)(PassportFormContainer)

@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { routerActions } from 'react-router-redux'
 import { passporttools, actions } from 'passport-service-gui'
 import constants from '../constants'
-import UIAppBar from '../components/AppBar'
+import AppBar from '../components/AppBar'
 
-export class AppBar extends Component {
+export class AppBarContainer extends Component {
   render() {
 
     const settings = this.context.settings
@@ -22,12 +22,12 @@ export class AppBar extends Component {
     }
 
     return (
-      <UIAppBar {...props} />
+      <AppBar {...props} />
     )
   }
 }
 
-AppBar.contextTypes = {
+AppBarContainer.contextTypes = {
   settings: React.PropTypes.object
 }
 
@@ -58,4 +58,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppBar)
+)(AppBarContainer)

@@ -1,7 +1,10 @@
 import React, { PropTypes, Component } from 'react'
 import Paper from 'material-ui/Paper'
+import Snackbar from 'material-ui/Snackbar'
 import { UserForm as UIUserForm } from 'passport-service-gui'
 import { layout, passportForms } from '../styles'
+
+const SNACKBAR_AUTOHIDE = 5000
 
 class UserForm extends Component {
   
@@ -25,6 +28,16 @@ class UserForm extends Component {
             </UIUserForm>
           </div>
         </Paper>
+        {
+          this.props.message ? 
+            (
+              <Snackbar 
+                open={true}
+                message={this.props.message}
+                autoHideDuration={SNACKBAR_AUTOHIDE}
+                onRequestClose={this.props.onCloseMessage} />
+            ) : null
+        }
       </div>
 
     )

@@ -11,6 +11,15 @@ export const path_loaded = (path, requireUser) => {
   }
 }
 
+export const BOILER_USER_DETAILS_MESSAGE = 'BOILER_USER_DETAILS_MESSAGE'
+
+export const user_details_message = (message = null) => {
+  return {
+    type: BOILER_USER_DETAILS_MESSAGE,
+    message
+  }
+}
+
 // the /status data has loaded
 // we want to re-trigger the Router auth onEnter functions
 // so move to a /loading page

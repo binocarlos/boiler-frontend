@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import UIHelp from '../components/Help'
+import Help from '../components/Help'
 
-export class Help extends Component {
+export class HelpContainer extends Component {
   render() {
     return (
-      <UIHelp {...this.props} />
+      <Help {...this.props} />
     )
   }
 }
@@ -21,4 +21,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Help)
+)(HelpContainer)
