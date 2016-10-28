@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Route, IndexRoute } from 'react-router'
 
-import Wrapper from './containers/Wrapper'
+import AuthWrapper from './containers/AuthWrapper'
 import Page from './components/Page'
 import PassportForm from './containers/PassportForm'
 import UserForm from './containers/UserForm'
@@ -14,7 +14,7 @@ export default (store, settings = {}) => {
   const innerRoutes = settings.getRoutes ? settings.getRoutes(auth) : null
 
   return (
-    <Route path="/" component={Wrapper}>
+    <Route path="/" component={AuthWrapper}>
       <Route component={Page}>
         <IndexRoute component={settings.welcome} onEnter={auth.guest} />
         <Route path="dashboard" component={settings.dashboard} onEnter={auth.user} />

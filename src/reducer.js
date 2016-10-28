@@ -7,7 +7,7 @@ import {
 const DEFAULT_STATE = {
   currentPage: {
     path: null,
-    requireUser: false
+    requireUser: null
   },
   // controls the snackbar on the user details page
   userDetailsMessage:null

@@ -24,11 +24,6 @@ export default (store, settings = {}) => {
       })
       redirected = true
     }
-    // otherwise record the page we are on for when
-    // /status is loaded
-    else{
-      store.dispatch(path_loaded(nextState.location.pathname, true))
-    }
     callback()
     return redirected
   }
@@ -45,11 +40,6 @@ export default (store, settings = {}) => {
         pathname: constants.dashboardPath
       })
       redirected = true
-    }
-    // otherwise record the page we are on for when
-    // /status is loaded
-    else{
-      store.dispatch(path_loaded(nextState.location.pathname, false))
     }
     callback()
     return redirected

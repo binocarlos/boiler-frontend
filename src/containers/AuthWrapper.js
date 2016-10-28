@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { passporttools, UserLoader } from 'passport-service-gui'
 import AppWrapper from 'kettle-ui/lib/AppWrapper'
 
@@ -29,7 +30,7 @@ import {
   for logged in - we display the children
   
 */
-export class Wrapper extends Component {
+export class AuthWrapper extends Component {
 
   render() {
 
@@ -38,7 +39,10 @@ export class Wrapper extends Component {
     const LoaderComponent = settings.loader
 
     return ( 
-      <UserLoader url={settings.passportUrl + '/status'} onLoaded={this.props.userLoaded}>
+      <UserLoader url={settings.passportUrl + '/status'} onLoaded={(data) => {
+        
+        this.props.userLoaded(data, this.props.router, this.props.routes)
+      }}>
         <AppWrapper
           appbar={
             <AppBarComponent />
@@ -61,7 +65,7 @@ export class Wrapper extends Component {
   }
 }
 
-Wrapper.contextTypes = {
+AuthWrapper.contextTypes = {
   settings: React.PropTypes.object
 }
 
@@ -73,11 +77,21 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    // on the initial data loading only
-    // we move the user to '/login if they are not logged in'
-    // after this point the onEnter handlers for the routes take over
-    userLoaded:(data = {}) => {
-      dispatch(user_loaded(data))
+    
+    userLoaded:(data = {}, router, routes) => {
+
+      const currentRoute = routes[routes.length - 1]
+      if(!currentRoute.onEnter) return
+
+      dispatch((dispatch, getState) => {
+
+        // here we run the onEnter function for the route
+        // giving it a chance to re-assert now that the user data has loaded
+        currentRoute.onEnter(getState(), router.replace, () => {
+          console.log('post onEnter')
+        })
+      })
+
     }
   }
 }
@@ -85,4 +99,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Wrapper)
+)(withRouter(AuthWrapper))
