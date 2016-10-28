@@ -14,16 +14,16 @@ class UserForm extends Component {
 
       <div style={styles.paddedContent}>
         <Paper zDepth={2}>
-          <UIUserForm 
-            styles={{
-              formwrapper:styles.wrapper
-            }}
-            onUpdate={this.props.onUpdate}
-            url={this.props.url}>
+          <div style={Object.assign({}, styles.wrapper, styles.detailsBottom)}>
+            <UIUserForm 
+              onUpdate={this.props.onUpdate}
+              schema={this.props.schema}
+              url={this.props.url}>
 
-            {this.props.children}
+              {this.props.children}
 
-          </UIUserForm>
+            </UIUserForm>
+          </div>
         </Paper>
       </div>
 

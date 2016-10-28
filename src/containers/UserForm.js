@@ -2,6 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { routerActions } from 'react-router-redux'
 import { passporttools, actions } from 'passport-service-gui'
+import {
+  EMAIL_FIELD
+} from 'passport-service-gui/lib/schema'
+
 import constants from '../constants'
 import UIUserForm from '../components/UserForm'
 
@@ -9,9 +13,15 @@ export class UserForm extends Component {
   render() {
 
     const settings = this.context.settings
+    const schema = [{
+      name:'email',
+      type:'text',
+      readonly:true
+    }].concat(settings.userDetailsSchema)
 
     const props = {
       url:settings.passportUrl + constants.detailsUrl,
+      schema,
       ...this.props
     }
 
@@ -46,8 +56,7 @@ function mapDispatchToProps(dispatch, ownProps) {
     onUpdate:(err, body, opts) => {
       if(err) return
 
-      console.log('-------------------------------------------');
-      console.log('user details saved')
+      alert('user form updated - put a snackbar in containers/UserForm.js')
     }
   }
 }

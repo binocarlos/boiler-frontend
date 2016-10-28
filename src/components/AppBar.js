@@ -32,6 +32,9 @@ export class AppBar extends Component {
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       >
         <MenuItem 
+          onClick={this.updateLocation('/accountdetails')}
+          primaryText="Account Details" />
+        <MenuItem 
           onClick={this.updateLocation('/help')}
           primaryText="Help" />
         <MenuItem 

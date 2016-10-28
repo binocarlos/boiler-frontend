@@ -11,7 +11,7 @@ class LoginMessage extends Component {
     const styles = settings.styles
 
     return (
-      <div style={styles.loginContent}>
+      <div>
         <Divider />
         <div style={styles.marginTop}>
           <Link to="/register">Click here</Link> to register

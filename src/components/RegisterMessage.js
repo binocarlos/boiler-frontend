@@ -11,7 +11,7 @@ class RegisterMessage extends Component {
     const styles = settings.styles
 
     return (
-      <div style={styles.registerContent}>
+      <div style={styles.registerBottom}>
         <Divider />
         <div style={styles.marginTop}>
           Enter your details to register.

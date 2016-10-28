@@ -16,7 +16,7 @@ const SETTINGS = {
   passportUrl:'/v1/auth',
   middleware:[],
   reducers:{},
-  routes:[],
+  userDetailsSchema:[],
   appbar:AppBar,
   loader:Loader,
   welcome:Welcome,

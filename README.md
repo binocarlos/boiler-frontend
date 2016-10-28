@@ -40,12 +40,13 @@ boilerapp({
 ## Options
 
  * styles - an object of overriden styles
- * routes - an array of objects describing the routes for `react-router`
+ * getRoutes - a function that returns react-router routes for the ap
  * reducers - an object of reducers to be passed into `combineReducers`
  * middleware - an array of middleware to be passed into `applyMiddleware`
  * passportUrl - the backend URL for the `passport-service` api
  * guestTitle - the appbar title when not logged in
  * appTitle - the appbar title when logged in
+ * userDetailsSchema - a [biro](https://github.com/binocarlos/biro) schema for the user details form
  * React/Redux components
    * appbar - the appbar
    * loader - the loading spinner
@@ -61,38 +62,25 @@ You can override the styles used for the layout of components by passing an obje
 
 The styles are merged with the [default styles](src/styles.js)
 
-#### `routes`
+#### `getRoutes(auth)`
 
-An array of objects that will be turned into `react-router` routes for the application.
+A function that will return the react-router routes for the various parts of the application.
 
-Each route object has the following properties:
+You can use `auth.user` and `auth.guest` as the `onEnter` value for the routes in-order to apply authentication requirements.
 
- * path
- * component
- * onEnter
- * openAccess - allow either guests or logged-in users
- * forceGuest - require a non logged-in user
- * routes - an array of child route info
- * ... - all other properties are passed to the `<Route />`
+```
+import { Route, IndexRoute } from 'react-router'
+import Hello from './Hello'
 
-Each route is also assigned an `onEnter` function to handle authentication.
-
-The default action is to required a logged in user.  To specify a route that does not need to be logged in - use the `guest` property of the route:
-
-```javascript
 boilerapp({
-  ...,
-  routes:[{
-    path:'/mything',
-    component:MyPage,
-    // this route does not require a logged in user
-    forceGuest:true
-  },{
-    path:'/about',
-    component:MyPage,
-    // this route does not require a logged in user
-    openAccess:true
-  }]
+  getRoutes:(auth) => {
+    return (
+      <Route>
+        <Route path="hello" component={Hello} onEnter={auth.user} />
+        <Route path="hello2" component={Hello} onEnter={auth.guest} />
+      </Route>
+    )
+  }
 })
 ```
 

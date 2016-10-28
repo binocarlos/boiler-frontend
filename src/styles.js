@@ -7,14 +7,14 @@ const styles = {
   wrapper:{
     margin:'20px',
   },
-  loginContent:{
-
-  },
-  registerContent:{
-    paddingBottom:'20px'
-  },
   marginTop:{
     marginTop:'10px'
+  },
+  registerBottom:{
+    paddingBottom:'20px'
+  },
+  detailsBottom:{
+    paddingBottom:'10px'
   }
 }
 
