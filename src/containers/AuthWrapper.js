@@ -80,16 +80,24 @@ function mapDispatchToProps(dispatch, ownProps) {
     
     userLoaded:(data = {}, router, routes) => {
 
-      const currentRoute = routes[routes.length - 1]
-      if(!currentRoute.onEnter) return
+      const onEnterRoutes = routes.filter((route) => route.onEnter)
+      
+      if(onEnterRoutes.length<=0) return
 
       dispatch((dispatch, getState) => {
 
-        // here we run the onEnter function for the route
+        const currentState = getState()
+
+        // here we run the onEnter function for the routes
         // giving it a chance to re-assert now that the user data has loaded
-        currentRoute.onEnter(getState(), router.replace, () => {
-          console.log('post onEnter')
+        onEnterRoutes.forEach((route) => {
+          route.onEnter(getState(), router.replace, () => {
+            
+            // code here for once they have been redirected because of the onEnter
+            
+          })
         })
+        
       })
 
     }
