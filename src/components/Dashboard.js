@@ -9,9 +9,6 @@ class Dashboard extends Component {
         <p>
           This is the dashboard
         </p>
-        <p>
-          <Link to="/folders">Click here</Link> for the folder app
-        </p>
       </div>
     )
   }
