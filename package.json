@@ -1,6 +1,6 @@
 {
   "name": "boiler-frontend",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "the frontend for the boilerstack app",
   "main": "lib/index.js",
   "scripts": {
