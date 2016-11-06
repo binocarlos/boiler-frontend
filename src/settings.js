@@ -13,7 +13,7 @@ import STYLES from './styles'
 
 const SETTINGS = {
   styles:{},
-  passportUrl:'/v1/auth',
+  passportUrl:'/auth/v1',
   middleware:[],
   reducers:{},
   userDetailsSchema:[],
