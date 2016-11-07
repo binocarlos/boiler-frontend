@@ -21,8 +21,8 @@ export default (store, settings = {}) => {
         <Route path="accountdetails" component={UserForm} page="register" onEnter={auth.user} />
         <Route path="help" component={settings.help} onEnter={auth.user} />
       </Route>
-      <Route path="login" component={PassportForm} page="login" onEnter={auth.guest} />
-      <Route path="register" component={PassportForm} page="register" onEnter={auth.guest} />
+      <Route path="login" component={PassportForm} page="login" />
+      <Route path="register" component={PassportForm} page="register" />
       <Route path="loading" component={settings.loader} />
       {innerRoutes}
     </Route>
