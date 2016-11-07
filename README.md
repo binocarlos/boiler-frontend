@@ -45,6 +45,7 @@ boilerapp({
  * middleware - an array of middleware to be passed into `applyMiddleware`
  * passportUrl - the backend URL for the `passport-service` api
  * guestTitle - the appbar title when not logged in
+ * userFilter(user) - a function that decides if the user is allowed (return true or false)
  * appTitle - the appbar title when logged in
  * userDetailsSchema - a [biro](https://github.com/binocarlos/biro) schema for the user details form
  * React/Redux components

@@ -16,14 +16,23 @@ export default (store, settings = {}) => {
   const requireUser = (nextState, replace, callback) => {
     const passport = getUserState()
     let redirected = false
+    let isAllowed = true
 
     // redirect to '/login' if there is no user
     if (passport.loaded && !passport.loggedIn) {
+      isAllowed = false
+    }
+    else if(passport.loaded && passport.loggedIn && typeof(settings.userFilter) == 'function'){
+      isAllowed = settings.userFilter(passport.user)
+    }
+
+    if(!isAllowed){
       replace({
         pathname: constants.loginPath
       })
       redirected = true
     }
+    
     callback()
     return redirected
   }
