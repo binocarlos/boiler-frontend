@@ -17,11 +17,7 @@ export class UserFormContainer extends Component {
   render() {
 
     const settings = this.context.settings
-    const schema = [{
-      name:'email',
-      type:'text',
-      readonly:true
-    }].concat(settings.userDetailsSchema)
+    const schema = [].concat(settings.userDetailsSchema)
 
     const props = {
       url:settings.passportUrl + constants.detailsUrl,
