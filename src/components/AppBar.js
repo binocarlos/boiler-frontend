@@ -65,7 +65,7 @@ export class AppBar extends Component {
   }
 
   render() {
-    const menuContent = this.props.getMenuChildren ?
+    const menuContent = this.props.passport.loggedIn && this.props.getMenuChildren ?
       this.props.getMenuChildren() :
       null
 
@@ -77,13 +77,18 @@ export class AppBar extends Component {
       
     return (
       <div>
-        <Drawer 
-          docked={false}
-          width={200}
-          open={this.props.isMenuOpen}
-          onRequestChange={this.props.toggleMenu}>
-          {menuContent}
-        </Drawer>
+        {
+          this.props.passport.loggedIn ?
+            (
+              <Drawer 
+                docked={false}
+                width={200}
+                open={this.props.isMenuOpen}
+                onRequestChange={this.props.toggleMenu}>
+                {menuContent}
+              </Drawer>
+            ) : null
+        }
         <UIAppBar
           showMenuIconButton={menuContent ? true : false}
           title={this.props.title}
