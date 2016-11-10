@@ -1,4 +1,9 @@
 import { routerActions } from 'react-router-redux'
+
+import {
+  status
+} from 'passport-service-gui/lib/actions'
+
 import constants from './constants'
 
 export const BOILER_USER_DETAILS_MESSAGE = 'BOILER_USER_DETAILS_MESSAGE'
@@ -16,4 +21,8 @@ export const toggle_menu = (open = true) => {
     type: BOILER_TOGGLE_MENU,
     open
   }
+}
+
+export const getPassportStatus = (url) => {
+  return status(url || '/auth/v1' + constants.statusUrl)
 }

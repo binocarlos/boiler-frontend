@@ -12,7 +12,10 @@ const CONSTANTS = {
   registerPath:'/register',
 
   // the backend route for the details 
-  detailsUrl:'/details'
+  detailsUrl:'/details',
+
+  // the backend route for the status
+  statusUrl:'/status'
 }
 
 export default CONSTANTS
