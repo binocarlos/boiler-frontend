@@ -9,11 +9,11 @@ export const user_details_message = (message = null) => {
     message
   }
 }
+export const BOILER_TOGGLE_MENU = 'BOILER_TOGGLE_MENU'
 
-export const user_loaded = (data = {}) => {
-  return (dispatch, getState) => {
-
-    
-    // refresh the router here
+export const toggle_menu = (open = true) => {
+  return {
+    type: BOILER_TOGGLE_MENU,
+    open
   }
 }

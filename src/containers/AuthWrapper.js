@@ -4,10 +4,6 @@ import { withRouter } from 'react-router'
 import { passporttools, UserLoader } from 'passport-service-gui'
 import AppWrapper from 'kettle-ui/lib/AppWrapper'
 
-import {
-  user_loaded 
-} from '../actions'
-
 /*
 
   the Wrapper displays the content of the top-level routes

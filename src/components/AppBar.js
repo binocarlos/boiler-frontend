@@ -4,7 +4,9 @@ import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
+import Drawer from 'material-ui/Drawer'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 
 export class AppBar extends Component {
 
@@ -51,14 +53,25 @@ export class AppBar extends Component {
   }
 
   render() {
-    return (    
-      <UIAppBar
-        showMenuIconButton={false}
-        title={this.props.title}
-        iconElementRight={this.getRightMenu()}
-        onTitleTouchTap={() => this.props.changeLocation('/')}
-        titleStyle={{cursor:'pointer'}}
-        zDepth={2} />
+    const menuContent = this.props.getMenuChildren()
+    return (
+      <div>
+        <Drawer 
+          docked={false}
+          width={200}
+          open={this.props.isMenuOpen}
+          onRequestChange={this.props.toggleMenu}>
+          {menuContent}
+        </Drawer>
+        <UIAppBar
+          showMenuIconButton={menuContent ? true : false}
+          title={this.props.title}
+          iconElementRight={this.getRightMenu()}
+          onTitleTouchTap={() => this.props.changeLocation('/')}
+          onLeftIconButtonTouchTap={() => this.props.openMenu(true)}
+          titleStyle={{cursor:'pointer'}}
+          zDepth={2} />
+      </div>
     )
   }
 }

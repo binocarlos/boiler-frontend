@@ -48,6 +48,7 @@ boilerapp({
  * userFilter(user) - a function that decides if the user is allowed (return true or false)
  * appTitle - the appbar title when logged in
  * userDetailsSchema - a [biro](https://github.com/binocarlos/biro) schema for the user details form
+ * getMenuChildren(context) - return React elements that will appear in a drawer
  * React/Redux components
    * appbar - the appbar
    * loader - the loading spinner

@@ -1,7 +1,7 @@
 import update from 'react/lib/update'
 import {
-  BOILER_PATH_LOADED,
-  BOILER_USER_DETAILS_MESSAGE
+  BOILER_USER_DETAILS_MESSAGE,
+  BOILER_TOGGLE_MENU
 } from './actions'
 
 const DEFAULT_STATE = {
@@ -10,29 +10,27 @@ const DEFAULT_STATE = {
     requireUser: null
   },
   // controls the snackbar on the user details page
-  userDetailsMessage:null
+  userDetailsMessage:null,
+  // controls the menu drawer inside of AuthWrapper -> AppBar
+  isMenuOpen:false
 }
 
 export default function boilerreducer(state = DEFAULT_STATE, action = {}) {
   switch (action.type) {
-
-    // clicked a node in the tree
-    case BOILER_PATH_LOADED:
-
-      return update(state, {
-        currentPage:{
-          $set:{
-            path:action.path,
-            requireUser:action.requireUser
-          }
-        }
-      })
 
     case BOILER_USER_DETAILS_MESSAGE:
 
       return update(state, {
         userDetailsMessage:{
           $set:action.message
+        }
+      })
+
+    case BOILER_TOGGLE_MENU:
+
+      return update(state, {
+        isMenuOpen:{
+          $set:action.open
         }
       })
       

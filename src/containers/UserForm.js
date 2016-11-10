@@ -46,7 +46,6 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     onUpdate:(err, body, opts) => {
       if(err) return
-
       dispatch(user_details_message('user details saved'))
     },
     onCloseMessage:() => {
