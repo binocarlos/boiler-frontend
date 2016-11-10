@@ -1,7 +1,9 @@
+import superagent from 'superagent'
 import { routerActions } from 'react-router-redux'
 
 import {
-  status
+  PASSPORT_STATUS_RESPONSE,
+  details
 } from 'passport-service-gui/lib/actions'
 
 import constants from './constants'
@@ -23,6 +25,38 @@ export const toggle_menu = (open = true) => {
   }
 }
 
-export const getPassportStatus = (url) => {
-  return status(url || '/auth/v1' + constants.statusUrl)
+/*
+
+  we manually refresh the user status otherwise
+  the 'loading' false causes flickers in the UI
+  
+*/
+export const refreshUserStatus = (done) => {
+  return (dispatch, getState) => {
+    superagent
+      .get('/auth/v1' + constants.statusUrl)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        if(res.status<500){
+          dispatch({
+            type: PASSPORT_STATUS_RESPONSE,
+            data: res.body
+          })
+          done && done(null, res.body)
+        }
+      })
+  }
+}
+
+export const updateUserData = (data, done) => {
+  return (dispatch, getState) => {
+    dispatch(details({
+      url:'/auth/v1' + constants.detailsUrl,
+      data
+    }, (err) => {
+      if(err) return done(err)
+      dispatch(refreshUserStatus(done))
+    }))
+  }
+  
 }
