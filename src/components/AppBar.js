@@ -8,6 +8,12 @@ import Drawer from 'material-ui/Drawer'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 
+const STYLES = {
+  button:{
+    backgroundColor: 'transparent',
+    color: 'white'
+  }
+}
 export class AppBar extends Component {
 
   updateLocation(url) {
@@ -28,7 +34,7 @@ export class AppBar extends Component {
     return (
       <IconMenu
         iconButtonElement={
-          <IconButton><MoreVertIcon /></IconButton>
+          <IconButton iconStyle={STYLES.button}><MoreVertIcon /></IconButton>
         }
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
@@ -53,7 +59,16 @@ export class AppBar extends Component {
   }
 
   render() {
-    const menuContent = this.props.getMenuChildren()
+    const menuContent = this.props.getMenuChildren ?
+      this.props.getMenuChildren() :
+      null
+
+    const rightMenuIcon = this.getRightMenu()
+
+    const appBarChildren = this.props.getAppBarChildren ?
+      this.props.getAppBarChildren(rightMenuIcon) :
+      null
+      
     return (
       <div>
         <Drawer 
@@ -66,7 +81,7 @@ export class AppBar extends Component {
         <UIAppBar
           showMenuIconButton={menuContent ? true : false}
           title={this.props.title}
-          iconElementRight={this.getRightMenu()}
+          iconElementRight={appBarChildren || rightMenuIcon}
           onTitleTouchTap={() => this.props.changeLocation('/')}
           onLeftIconButtonTouchTap={() => this.props.openMenu(true)}
           titleStyle={{cursor:'pointer'}}

@@ -31,6 +31,12 @@ export class AppBarContainer extends Component {
           }) :
           null
       },
+      // return extra content for the appbar
+      getAppBarChildren:(children) => {
+        return settings.getAppBarChildren ?
+          settings.getAppBarChildren(children) :
+          null
+      },
       title,
       ...this.props
     }
