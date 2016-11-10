@@ -12,6 +12,9 @@ const STYLES = {
   button:{
     backgroundColor: 'transparent',
     color: 'white'
+  },
+  buttonContainer:{
+    paddingTop:'4px'
   }
 }
 export class AppBar extends Component {
@@ -24,9 +27,12 @@ export class AppBar extends Component {
 
   getLoginButton() {
     return (
-      <FlatButton 
-        onClick={this.updateLocation('/login')}
-        label="Login" />
+      <div style={STYLES.buttonContainer}>
+        <FlatButton 
+          style={STYLES.button}
+          onClick={this.updateLocation('/login')}
+          label="Login" />
+      </div>
     )
   }
 
