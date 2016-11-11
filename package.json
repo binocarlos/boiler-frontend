@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/binocarlos/boiler-frontend",
   "dependencies": {
-    "kettle-ui": "^3.0.0",
+    "kettle-ui": "^3.5.0",
     "material-ui": "^0.15.4",
     "passport-service-gui": "^3.0.0",
     "react": "^15.3.1",
