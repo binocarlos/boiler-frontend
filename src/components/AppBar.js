@@ -1,84 +1,37 @@
 import React, { Component, PropTypes } from 'react'
 import UIAppBar from 'material-ui/AppBar'
-import IconButton from 'material-ui/IconButton'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
-import FlatButton from 'material-ui/FlatButton'
 import Drawer from 'material-ui/Drawer'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-import MenuIcon from 'material-ui/svg-icons/navigation/menu'
 
-const STYLES = {
-  button:{
-    backgroundColor: 'transparent',
-    color: 'white'
-  },
-  buttonContainer:{
-    paddingTop:'4px'
-  }
-}
+import UserMenu from './UserMenu'
+
 export class AppBar extends Component {
 
-  updateLocation(url) {
-    return () => {
-      this.props.changeLocation(url)
-    }
-  }
-
-  getLoginButton() {
-    return (
-      <div style={STYLES.buttonContainer}>
-        <FlatButton 
-          style={STYLES.button}
-          onClick={this.updateLocation('/login')}
-          label="Login" />
-      </div>
-    )
-  }
-
-  getUserMenu() {
-    return (
-      <IconMenu
-        iconButtonElement={
-          <IconButton iconStyle={STYLES.button}><MoreVertIcon /></IconButton>
-        }
-        targetOrigin={{horizontal: 'right', vertical: 'top'}}
-        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-      >
-        <MenuItem 
-          onClick={this.updateLocation('/accountdetails')}
-          primaryText="Account Details" />
-        <MenuItem 
-          onClick={this.updateLocation('/help')}
-          primaryText="Help" />
-        <MenuItem 
-          onClick={this.props.logout}
-          primaryText="Sign out" />
-      </IconMenu>
-    )
-  }
-
-  getRightMenu() {
-    return this.props.passport.loggedIn ?
-      this.getUserMenu() :
-      this.getLoginButton()
-  }
-
   render() {
-    const menuContent = this.props.passport.loggedIn && this.props.getMenuChildren ?
-      this.props.getMenuChildren() :
+
+    // the menu content is React Elements that will appear in the right hand drawer
+    const menuContent = this.props.getMenu ?
+      this.props.getMenu(this.props.user, this.props.state, (location) => {
+        this.props.changeLocation(location)
+        this.props.toggleMenu(false)
+      }) :
       null
 
-    const rightMenuIcon = this.getRightMenu()
+    // if we are logged we get a drop-down
+    // other-wise it's a link to the login button
+    const rightMenuIcon = (
+      <UserMenu {...this.props} />
+    )
 
-    const appBarChildren = this.props.getAppBarChildren ?
+    // give the user a chance to wrap the right-hand icon
+    // with their own-contnt
+    const iconElementRight = this.props.getAppBarChildren ?
       this.props.getAppBarChildren(rightMenuIcon) :
-      null
+      rightMenuIcon
       
     return (
       <div>
         {
-          this.props.passport.loggedIn ?
+          menuContent ?
             (
               <Drawer 
                 docked={false}
@@ -92,9 +45,9 @@ export class AppBar extends Component {
         <UIAppBar
           showMenuIconButton={menuContent ? true : false}
           title={this.props.title}
-          iconElementRight={appBarChildren || rightMenuIcon}
+          iconElementRight={iconElementRight}
           onTitleTouchTap={() => this.props.changeLocation('/')}
-          onLeftIconButtonTouchTap={() => this.props.openMenu(true)}
+          onLeftIconButtonTouchTap={() => this.props.toggleMenu(true)}
           titleStyle={{cursor:'pointer'}}
           zDepth={2} />
       </div>

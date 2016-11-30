@@ -1,26 +1,27 @@
+import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import { Provider } from 'react-redux'
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import { Router, hashHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
-import thunk from 'redux-thunk'
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { passportreducer } from 'passport-service-gui'
+
 import boilerReducer from './reducer'
-
-
 import Routes from './routes'
-import { SettingsFactory, SettingsProvider } from './settings'
+import SettingsFactory from './settings'
+import Sagas from './sagas'
 
-const boilerapp = (opts = {}) => {
+const boilerapp = (settings = {}) => {
 
-  const settings = SettingsFactory(opts)
+  settings = SettingsFactory(settings)
+
+  const sagaMiddleware = createSagaMiddleware()
 
   const middleware = [
-    thunk,
+    sagaMiddleware,
     routerMiddleware(hashHistory)
   ].concat(settings.middleware)
 
@@ -30,7 +31,6 @@ const boilerapp = (opts = {}) => {
   )(createStore)
 
   const reducer = combineReducers({
-    passport: passportreducer,
     routing: routerReducer,
     boiler: boilerReducer,
     ...settings.reducers
@@ -38,20 +38,19 @@ const boilerapp = (opts = {}) => {
 
   const store = finalCreateStore(reducer)
   const history = syncHistoryWithStore(hashHistory, store)
-
+  
+  sagaMiddleware.run(Sagas(settings.sagas))
   injectTapEventPlugin()
 
   ReactDOM.render(  
     <Provider store={store}>
-      <SettingsProvider settings={settings}>
-        <MuiThemeProvider>
-          <Router history={history}>
-            {Routes(store, settings)}
-          </Router>
-        </MuiThemeProvider>
-      </SettingsProvider>
+      <MuiThemeProvider>
+        <Router history={history}>
+          {Routes(store, settings)}
+        </Router>
+      </MuiThemeProvider>
     </Provider>,
-    opts.mountElement ? opts.mountElement : documemnt.getElementById(opts.mountId)
+    settings.mountElement ? settings.mountElement : documemnt.getElementById(settings.mountId)
   )
 }
 

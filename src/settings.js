@@ -1,53 +1,34 @@
 import React, { Component, PropTypes } from 'react'
 
-import Welcome from './containers/Welcome'
-import Dashboard from './containers/Dashboard'
-import Help from './containers/Help'
 import AppBar from './containers/AppBar'
 
-import Loader from './components/Loader'
+import Welcome from './components/Welcome'
+import Dashboard from './components/Dashboard'
+import Help from './components/Help'
 import LoginMessage from './components/LoginMessage'
 import RegisterMessage from './components/RegisterMessage'
+
 
 import STYLES from './styles'
 
 const SETTINGS = {
-  styles:{},
-  passportUrl:'/auth/v1',
   middleware:[],
   reducers:{},
-  userDetailsSchema:[],
+  sagas:[],
   appbar:AppBar,
-  loader:Loader,
   welcome:Welcome,
   dashboard:Dashboard,
   help:Help,
-  loginMessage:LoginMessage,
-  registerMessage:RegisterMessage,
-  guestTitle:'Login / Register',
-  appTitle:'App Title'
+  getUser:(state) => null,
+  getRoutes:(auth) => [],
+  getTitle:(state, user) => 'MyApp',
+  getMenu:null
 }
 
 // merge the settings with the defaults
-export const SettingsFactory = (settings = {}) => {
-  settings = Object.assign({}, SETTINGS, settings)
-  settings.styles = Object.assign({}, STYLES, settings.styles)
-  return settings
+const SettingsFactory = (settings = {}) => {
+  if(!settings.mountElement && !settings.mountId) throw new Error('mountElement or mountId option required')
+  return Object.assign({}, SETTINGS, settings)
 }
 
-// provide the settings down the tree
-export class SettingsProvider extends React.Component {
-  getChildContext() {
-    return {
-      settings: this.props.settings || {}
-    }
-  }
-
-  render() {
-    return this.props.children
-  }
-}
-
-SettingsProvider.childContextTypes = {
-  settings: React.PropTypes.object
-}
+export default SettingsFactory

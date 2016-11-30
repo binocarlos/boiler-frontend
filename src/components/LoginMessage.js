@@ -1,15 +1,11 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import Divider from 'material-ui/Divider'
-import { passportForms } from '../styles'
+import styles from '../styles'
 
 class LoginMessage extends Component {
   
   render() {
-
-    const settings = this.context.settings
-    const styles = settings.styles
-
     return (
       <div>
         <Divider />
@@ -20,10 +16,6 @@ class LoginMessage extends Component {
     )
   }
 
-}
-
-LoginMessage.contextTypes = {
-  settings: React.PropTypes.object
 }
 
 export default LoginMessage

@@ -1,30 +1,24 @@
 import React, { Component, PropTypes } from 'react'
 import { Route, IndexRoute } from 'react-router'
 
-import AuthWrapper from './containers/AuthWrapper'
-import Page from './components/Page'
-import PassportForm from './containers/PassportForm'
-import UserForm from './containers/UserForm'
-
-import Auth from './auth'
+import AppWrapper from './components/AppWrapper'
 
 export default (store, settings = {}) => {
 
-  const auth = Auth(store, settings)
-  const innerRoutes = settings.getRoutes ? settings.getRoutes(auth) : null
-
+/*
+  const auth = PassportAuth(store, settings)
+  const routes = settings.getRoutes ? settings.getRoutes(auth) : null
+  const passportRoutes = PassportRoutes({
+    loginRoute:settings.loginRoute,
+    registerRoute:settings.registerRoute,
+    loginMessage:settings.loginMessage,
+    registerMessage:settings.registerMessage
+  })
+*/
+  //onEnter={auth.ensureUser('/login')}
   return (
-    <Route path="/" component={AuthWrapper}>
-      <Route component={Page}>
-        <IndexRoute component={settings.welcome} onEnter={auth.guest} />
-        <Route path="dashboard" component={settings.dashboard} onEnter={auth.user} />
-        <Route path="accountdetails" component={UserForm} page="register" onEnter={auth.user} />
-        <Route path="help" component={settings.help} onEnter={auth.user} />
-      </Route>
-      <Route path="login" component={PassportForm} page="login" />
-      <Route path="register" component={PassportForm} page="register" />
-      <Route path="loading" component={settings.loader} />
-      {innerRoutes}
+    <Route path="/" component={AppWrapper} settings={settings}>
+      <IndexRoute component={settings.welcome}  />
     </Route>
   )
 }

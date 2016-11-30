@@ -1,18 +1,9 @@
 import React, { Component, PropTypes } from 'react'
-import { layout } from '../styles'
+import styles from '../styles'
 
-/*
-
-  wrapper component for pages that have a margin around them
-  
-*/
 class Page extends Component {
 
   render() {
-
-    const settings = this.context.settings
-    const styles = settings.styles
-    
     return (
       <div style={styles.paddedContent}>
         {this.props.children}
