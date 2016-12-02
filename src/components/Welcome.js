@@ -11,7 +11,7 @@ class Welcome extends Component {
           <p>
             Welcome!
           </p>
-          
+          {this.props.children}
         </div>
       </Page>
     )

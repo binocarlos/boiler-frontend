@@ -1,20 +1,23 @@
 import React, { Component, PropTypes } from 'react'
-import styles from '../styles'
+
+const STYLES = {
+  paddedContent:{
+    marginLeft:'10%',
+    marginRight:'10%',
+    marginTop:'5%'
+  }
+}
 
 class Page extends Component {
 
   render() {
     return (
-      <div style={styles.paddedContent}>
+      <div style={STYLES.paddedContent}>
         {this.props.children}
       </div>
     )
   }
 
-}
-
-Page.contextTypes = {
-  settings: React.PropTypes.object
 }
 
 export default Page

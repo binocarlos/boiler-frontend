@@ -1,55 +1,48 @@
-import 'babel-polyfill'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import injectTapEventPlugin from 'react-tap-event-plugin'
-import { Provider } from 'react-redux'
-import { applyMiddleware, compose, createStore, combineReducers } from 'redux'
-import createSagaMiddleware from 'redux-saga'
-import { Router, hashHistory } from 'react-router'
-import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+import { combineReducers } from 'redux'
+import { hashHistory } from 'react-router'
+import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
+
+import SettingsFactory from './settings'
 import boilerReducer from './reducer'
 import Routes from './routes'
-import SettingsFactory from './settings'
+import Store from './store'
+
 import Sagas from './sagas'
+
+import Root from './containers/Root'
 
 const boilerapp = (settings = {}) => {
 
   settings = SettingsFactory(settings)
 
-  const sagaMiddleware = createSagaMiddleware()
-
-  const middleware = [
-    sagaMiddleware,
-    routerMiddleware(hashHistory)
-  ].concat(settings.middleware)
-
-  const finalCreateStore = compose(
-    applyMiddleware.apply(null, middleware),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )(createStore)
-
-  const reducer = combineReducers({
+  const rootReducer = combineReducers({
     routing: routerReducer,
     boiler: boilerReducer,
     ...settings.reducers
   })
 
-  const store = finalCreateStore(reducer)
+  const middleware = [
+    routerMiddleware(hashHistory)
+  ].concat(settings.middleware)
+
+  const store = Store(rootReducer, middleware, window.__INITIAL_STATE__)
   const history = syncHistoryWithStore(hashHistory, store)
+  const routes = Routes(store, settings)
   
-  sagaMiddleware.run(Sagas(settings.sagas))
+  store.runSaga(Sagas(settings.sagas))
   injectTapEventPlugin()
 
-  ReactDOM.render(  
-    <Provider store={store}>
-      <MuiThemeProvider>
-        <Router history={history}>
-          {Routes(store, settings)}
-        </Router>
-      </MuiThemeProvider>
-    </Provider>,
+  render(
+
+    <Root
+      store={store}
+      history={history}
+      routes={routes} />,
+   
     settings.mountElement ? settings.mountElement : documemnt.getElementById(settings.mountId)
   )
 }

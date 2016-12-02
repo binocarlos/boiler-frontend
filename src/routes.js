@@ -5,20 +5,12 @@ import AppWrapper from './components/AppWrapper'
 
 export default (store, settings = {}) => {
 
-/*
-  const auth = PassportAuth(store, settings)
-  const routes = settings.getRoutes ? settings.getRoutes(auth) : null
-  const passportRoutes = PassportRoutes({
-    loginRoute:settings.loginRoute,
-    registerRoute:settings.registerRoute,
-    loginMessage:settings.loginMessage,
-    registerMessage:settings.registerMessage
-  })
-*/
-  //onEnter={auth.ensureUser('/login')}
+  const routes = settings.getRoutes ? settings.getRoutes(store) : null
+
   return (
     <Route path="/" component={AppWrapper} settings={settings}>
       <IndexRoute component={settings.welcome}  />
+      {routes}
     </Route>
   )
 }

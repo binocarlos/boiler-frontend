@@ -1,14 +1,11 @@
 import AppFactory from '../factory'
-import SettingsFactory from '../settings'
+
+const DEFAULT_SETTINGS = {
+  openAccess:true
+}
 
 const openAccessApp = (settings = {}) => {
-  settings = SettingsFactory(settings)
-
-  settings = Object.assign({}, settings, {
-    openAccess:true
-  })
-  
-  return AppFactory(settings)
+  return AppFactory(Object.assign({}, DEFAULT_SETTINGS, settings))
 }
 
 export default openAccessApp

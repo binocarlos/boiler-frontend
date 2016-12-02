@@ -5,9 +5,6 @@ import AppBar from './containers/AppBar'
 import Welcome from './components/Welcome'
 import Dashboard from './components/Dashboard'
 import Help from './components/Help'
-import LoginMessage from './components/LoginMessage'
-import RegisterMessage from './components/RegisterMessage'
-
 
 import STYLES from './styles'
 
@@ -26,9 +23,9 @@ const SETTINGS = {
 }
 
 // merge the settings with the defaults
-const SettingsFactory = (settings = {}) => {
+const SettingsFactory = (settings = {}, defaultSettings = {}) => {
   if(!settings.mountElement && !settings.mountId) throw new Error('mountElement or mountId option required')
-  return Object.assign({}, SETTINGS, settings)
+  return Object.assign({}, SETTINGS, defaultSettings, settings)
 }
 
 export default SettingsFactory
