@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Page from './Page'
+import Page from 'kettle-ui/lib/Page'
 
 class Welcome extends Component {
 
