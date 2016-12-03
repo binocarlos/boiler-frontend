@@ -24,7 +24,6 @@ const SETTINGS = {
 
 // merge the settings with the defaults
 const SettingsFactory = (settings = {}, defaultSettings = {}) => {
-  if(!settings.mountElement && !settings.mountId) throw new Error('mountElement or mountId option required')
   return Object.assign({}, SETTINGS, defaultSettings, settings)
 }
 

@@ -1,15 +1,14 @@
 import React from 'react'
-import { render } from 'react-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-
 import { combineReducers } from 'redux'
 import { hashHistory } from 'react-router'
+
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
 
 import SettingsFactory from './settings'
 import boilerReducer from './reducer'
 import Routes from './routes'
 import Store from './store'
+
 
 import Sagas from './sagas'
 
@@ -34,16 +33,12 @@ const boilerapp = (settings = {}) => {
   const routes = Routes(store, settings)
   
   store.runSaga(Sagas(settings.sagas))
-  injectTapEventPlugin()
-
-  render(
-
+  
+  return (
     <Root
       store={store}
       history={history}
-      routes={routes} />,
-   
-    settings.mountElement ? settings.mountElement : documemnt.getElementById(settings.mountId)
+      routes={routes} />
   )
 }
 

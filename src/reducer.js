@@ -1,4 +1,4 @@
-import update from 'react/lib/update'
+import update from 'immutability-helper'
 
 const DEFAULT_STATE = {
   // controls the menu drawer inside of AuthWrapper -> AppBar
