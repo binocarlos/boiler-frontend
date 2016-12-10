@@ -4,9 +4,7 @@
   "description": "the frontend for the boilerstack app",
   "scripts": {
     "compile": "babel -d lib/ src/",
-    "prepublish": "npm run compile",
-    "link": "cp -r lib/* ~/projects/boiler-stack/frontend/node_modules/boiler-frontend/lib",
-    "devlink": "npm run compile && npm run link"
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
