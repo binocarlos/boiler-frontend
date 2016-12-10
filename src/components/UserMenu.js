@@ -4,7 +4,6 @@ import IconMenu from 'material-ui/IconMenu'
 import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import MenuItem from 'material-ui/MenuItem'
-import FlatButton from 'material-ui/FlatButton'
 
 const STYLES = {
   button:{
@@ -15,21 +14,11 @@ const STYLES = {
     paddingTop:'4px'
   }
 }
+
 export class UserMenu extends Component {
-
-  getLoginButton() {
-    return (
-      <div style={STYLES.buttonContainer}>
-        <FlatButton 
-          style={STYLES.button}
-          onClick={() => this.props.changeLocation('/login')}
-          label="Login" />
-      </div>
-    )
-  }
-
-  getUserMenu() {
-    return (
+  render() {
+    const menuItems = this.props.items || []
+    return menuItems.length <= 0 ? null : (
       <IconMenu
         iconButtonElement={
           <IconButton iconStyle={STYLES.button}><MoreVertIcon /></IconButton>
@@ -37,28 +26,16 @@ export class UserMenu extends Component {
         targetOrigin={{horizontal: 'right', vertical: 'top'}}
         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
       >
-        <MenuItem 
-          onClick={() => this.props.changeLocation('/accountdetails')}
-          primaryText="Account Details" />
-        <MenuItem 
-          onClick={() => this.props.changeLocation('/help')}
-          primaryText="Help" />
-        <MenuItem 
-          onClick={() => this.props.doLogout()}
-          primaryText="Sign out" />
+        {(menuItems || []).map((item, i) => {
+          return (
+            <MenuItem 
+              key={i}
+              onClick={item.handler}
+              primaryText={item.label} />
+          )
+        })}
       </IconMenu>
     )
-  }
-
-  render() {
-
-    if(this.props.openAccess){
-      return null
-    }
-    
-    return this.props.user ?
-      this.getUserMenu() :
-      this.getLoginButton()
   }
 }
 
