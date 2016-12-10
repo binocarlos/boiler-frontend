@@ -1,59 +1,80 @@
-'use strict';
+const webpack = require('webpack');
+const path = require('path');
 
-var path = require('path')
-var webpack = require('webpack')
+const APP = process.env.APP || 'app'
+const nodeEnv = process.env.NODE_ENV || 'development';
+const isProd = nodeEnv === 'production';
 
-var RELEASE = process.env.NODE_ENV == 'production' ? true : false;
+const plugins = [
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks: Infinity,
+    filename: 'vendor.bundle.js'
+  }),
+  new webpack.DefinePlugin({
+    'process.env': { NODE_ENV: JSON.stringify(nodeEnv) }
+  }),
+  new webpack.NamedModulesPlugin(),
+];
 
-var nodeEnvPlugin = new webpack.DefinePlugin({
-  'process.env.NODE_ENV': RELEASE ? '"production"' : '"development"'
-})
+if (isProd) {
+  plugins.push(
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        screw_ie8: true,
+        conditionals: true,
+        unused: true,
+        comparisons: true,
+        sequences: true,
+        dead_code: true,
+        evaluate: true,
+        if_return: true,
+        join_vars: true,
+      },
+      output: {
+        comments: false
+      },
+    })
+  );
+} else {
+  plugins.push(
+    new webpack.HotModuleReplacementPlugin()
+  );
+}
 
 module.exports = {
-  devtool: RELEASE ? [] : [
-    'source-map'
-  ],
-  entry: [
-    './example/index'
-  ],
-    
+  devtool: isProd ? '' : 'source-map',
+  context: path.resolve(__dirname, 'example', APP),
+  entry: {
+    js: './index.js',
+    vendor: ['react']
+  },
   output: {
     path: path.join(__dirname, 'example', 'dist'),
-    filename: 'app.js'
+    filename: APP + '.js'
   },
-
-  resolve: {
-    extensions: ['', '.js', '.jsx'],
-    alias: {
-      react: path.resolve('./node_modules/react')
-    }
-  },
-
-  plugins: RELEASE ? [
-
-    nodeEnvPlugin,
-
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      compress: {
-        warnings: false
-      }
-    })
-  ] : [
-    nodeEnvPlugin
-  ],
-
   module: {
-    loaders: [
+    rules: [
       {
-        test: /.jsx?$/,
-        loader: 'babel-loader',
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        query: {
-          presets: ['es2015', 'react', 'stage-1']
-        }
-      }
-
+        use: [
+          'babel-loader'
+        ]
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx'],
+    modules: [
+      path.resolve(__dirname, 'node_modules'),
+      path.resolve(__dirname, 'src')
     ]
-  }
+  },
+  plugins
 };
