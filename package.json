@@ -1,6 +1,6 @@
 {
   "name": "boiler-frontend",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "the frontend for the boilerstack app",
   "scripts": {
     "compile": "babel -d lib/ src/",
