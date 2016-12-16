@@ -6,13 +6,8 @@ import UIAppWrapper from 'kettle-ui/lib/AppWrapper'
 import AppBar from '../components/AppBar'
 import Drawer from '../components/Drawer'
 
-import {
-  toggle_menu
-} from '../actions'
-
-import {
-  isMenuOpen
-} from '../selectors'
+import * as actions from '../actions'
+import * as selectors from '../selectors'
 
 export class AppWrapperContainer extends Component {
   render() {
@@ -43,6 +38,8 @@ export class AppWrapperContainer extends Component {
       </Drawer>
     ) : null
 
+    const statics = this.props.statics || []
+
     const app = ( 
       <UIAppWrapper
         appbar={appbar}
@@ -53,6 +50,15 @@ export class AppWrapperContainer extends Component {
           </div>
           <div>
             {sidemenu}
+          </div>
+          <div>
+            {statics.map((s, i) => {
+              return (
+                <div key={i}>
+                  {s}
+                </div>
+              )
+            })}
           </div>
         </div>
       </UIAppWrapper>
@@ -69,6 +75,8 @@ export class AppWrapperContainer extends Component {
 function mapStateToProps(state, ownProps) {
   const settings = ownProps.route.settings
   const store = ownProps.route.store
+  const statics = ownProps.route.statics
+  
   return {
     appbarComponent:settings.appbarComponent,
     title:settings.getTitle(state),
@@ -76,7 +84,8 @@ function mapStateToProps(state, ownProps) {
     getAppbarContent:settings.getAppbarContent(store),
     getMenuContent:settings.getMenuContent(store),
     hasMenu:settings.hasMenu,
-    isMenuOpen:isMenuOpen(state)
+    isMenuOpen:selectors.menu(state).open(),
+    statics:statics
   }
 }
 
@@ -87,7 +96,7 @@ function mapDispatchToProps(dispatch, ownProps) {
       dispatch(routerActions.push(path))
     },
     toggleMenu:(open) => {
-      dispatch(toggle_menu(open))
+      dispatch(actions.toggle_menu(open))
     }
   }
 }

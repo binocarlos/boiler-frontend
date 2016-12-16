@@ -1,1 +1,12 @@
-export const isMenuOpen = (state) => state.boiler.isMenuOpen
+export const menu = (state) => {
+  return {
+    open:() => state.boiler.menu.open
+  }
+}
+
+export const snackbar = (state) => {
+  return {
+    open:() => state.boiler.snackbar.open,
+    message:() => state.boiler.snackbar.message
+  }
+}

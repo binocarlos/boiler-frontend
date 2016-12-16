@@ -65,8 +65,15 @@ const routeFactory = (store, plugins = [], settings = {}) => {
     ) : null
   }).filter(routes => routes)
 
+  const staticComponents = plugins.reduce((statics, plugin) => {
+    const pluginStatics = plugin.getStatics ?
+      plugin.getStatics(store, routeContext) :
+      null
+    return statics.concat(pluginStatics || [])
+  }, [])
+
   return (
-    <Route path="/" component={AppWrapper} store={store} settings={settings}>
+    <Route path="/" component={AppWrapper} store={store} settings={settings} statics={staticComponents}>
       {appRoutes}
     </Route>
   )
