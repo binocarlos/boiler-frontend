@@ -44,7 +44,13 @@ const sagaFactory = (plugins = [], store) => {
 
 const reducerFactory = (plugins = []) => {
   return plugins.reduce((allReducers, plugin) => {
-    return Object.assign({}, allReducers, plugin.getReducers ? plugin.getReducers() : {})
+    const pluginReducer = plugin.getReducer ?
+      plugin.getReducer() :
+      null
+    if(!pluginReducer) return allReducers
+    return Object.assign({}, allReducers, {
+      [plugin.id]:pluginReducer
+    })
   }, {})
 }
 

@@ -2,14 +2,13 @@ import reducer from '../reducer'
 
 const BoilerCore = (settings = {}) => {
 
-  const getReducers = () => {
-    return {
-      boiler:reducer
-    }
+  const getReducer = () => {
+    return reducer
   }
 
   return {
-    getReducers
+    id:'boiler',
+    getReducer
   }
 }
 
